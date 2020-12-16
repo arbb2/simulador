@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<HEAD>	 
+ 	 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+ </HEAD>
+
+
+<body>
+
+
+
+<p><b>Ingrese meta de ventas mes actual</b></p>
+<input type="number" min="1" max="500" id="meta_de_ventas" value="30">
+<p><b>Ingrese numero de ventas instaladas en mes actual</b></p>
+<input type="number" min="0" max="500" id="ventas_instaladas" value=" ">
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<p><b>Ingrese meta de calidad</b></p>
+<input type="number" min="1" max="500" id="meta_de_calidad" value="79"><b>%</b>
+<p><b>Ingrese numero de CLIENTES hechos el mes pasado</b></p>
+<input type="number" min="0" max="500" id="hechos_el_mes_pasado" value=" ">
+<p><b>Ingrese numero de CLIENTES hechos el mes pasado pagados en plazo</b></p>
+<input type="number" min="0" max="500" id="en_plazo" value=" ">
+
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<button onclick="boton()">Calcular</button>
+
+<p>Cumplimiento de venta</p> 
+<p><span id="cumplimiento_venta"></span>%</p>
+
+<p>Cumplimiento de calidad</p> 
+<p><span id="cumplimiento_calidad"></span>%</p>
+
+
+<br/>
+
+<p>Valor venta</p> 
+<p><span id="valor_venta"></span> pesos</p>
+
+<br/>
+
+<p>Valor comisiones </p> 
+<p><span id="remuneracion"></span> pesos</p>
+
+
+<!--
+<p>numero de elementos array de vigentes</p>
+<p><span id="vig_len"></span></p>
+
+<p>array de nuevos</p>
+<p><span id="nuev"></span></p>
+<p>numero de elementos array de nuevos</p>
+<p><span id="nuev_len"></span></p>
+
+<p>array de los elementos que hicieron match</p>
+<p><span id="match"></span></p>
+<p>numero de elementos del match</p>
+<p><span id="match_len"></span></p>
+
+<p>dias prop</p>
+<p><span id="dias_prop"></span></p>
+
+
+<p>array descuento</p>
+<p><span id="array_descuento"></span></p>
+
+
+<p>descuento renta normal</p>
+<p><span id="desc_de_renta_normal"></span></p>
+
+<p>numeral codigo</p>
+<p><span id="numeral_codigo"></span></p>
+
+<p>letra de vigente</p>
+<p><span id="letra_vig"></span></p>
+
+<p>letra tv</p>
+<p><span id="letra_tv"></span></p>
+                           
+
+<p>letra inet</p>
+<p><span id="letra_inet"></span></p>
+
+
+<p>letra fono</p>
+<p><span id="letra_fono"></span></p>
+
+
+<p>precio extraido actual</p>
+<p><span id="precio_actual"></span></p>
+						   
+<p>precio extraido tv</p>
+<p><span id="precio_tv"></span></p>
+
+<p>precio extraido inet</p>
+<p><span id="precio_inet"></span></p>
+
+<p>precio extraido fono</p>
+<p><span id="precio_fono"></span></p>	
+
+
+
+
+<p>nombre extraido actual</p>
+<p><span id="nombre_vigente"></span></p>
+						   
+<p>nombre extraido tv</p>
+<p><span id="nombre_tv"></span></p>
+
+<p>nombre extraido inet</p>
+<p><span id="nombre_inet"></span></p>
+
+<p>nombre extraido fono</p>
+<p><span id="nombre_fono"></span></p>-->
+
+	
+
+
+
+			   
+						   
+<script>
+
+function cump_venta(){
+
+  meta = document.getElementById("meta_de_ventas").value
+  cantidad = document.getElementById("ventas_instaladas").value
+  
+  cumpliento_venta = parseInt((cantidad/meta)*100);
+  
+  return cumpliento_venta;
+
+
+
+}
+
+function cump_calidad(){
+
+  meta = document.getElementById("meta_de_calidad").value
+  clientes_hechos = document.getElementById("hechos_el_mes_pasado").value
+  clientes_en_plazo =  document.getElementById("en_plazo").value
+
+  porcentaje_en_plazo = parseInt((clientes_en_plazo/clientes_hechos)*100);
+
+  cumplimiento_calidad = parseInt((porcentaje_en_plazo/meta)*100);
+
+  return cumplimiento_calidad;
+
+}
+
+
+
+function total_remuneracion(valor_venta){
+ cantidad = document.getElementById("ventas_instaladas").value
+
+ return cantidad*valor_venta;
+}
+
+
+
+function PAGO_VENTA(CUMPLIMIENTO_VENTA,CUMPLIMIENTO_CALIDAD) {
+  
+  //-----1
+  
+  if(CUMPLIMIENTO_VENTA <= 40 && CUMPLIMIENTO_CALIDAD >= 105){
+     
+    return 325;
+    
+  }else if(CUMPLIMIENTO_VENTA <= 40 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92 ){
+  
+    return 270;
+  
+  }else if(CUMPLIMIENTO_VENTA <=40 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 162;
+  
+  }else if(CUMPLIMIENTO_VENTA <=40 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 108;
+  
+  }else if(CUMPLIMIENTO_VENTA <=40 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001 ){
+  
+    return 14;  
+    
+  }
+  
+  //-----2
+  
+  if(CUMPLIMIENTO_VENTA >= 40.1 && CUMPLIMIENTO_VENTA <= 70 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 5400;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 40.1 && CUMPLIMIENTO_VENTA <= 70 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 4500;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 40.1 && CUMPLIMIENTO_VENTA <= 70 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 270;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 40.1 && CUMPLIMIENTO_VENTA <= 70 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 180;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 40.1 && CUMPLIMIENTO_VENTA <= 70 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 23;
+  
+  }
+  
+  //-----3
+  
+  if(CUMPLIMIENTO_VENTA >= 70.1 && CUMPLIMIENTO_VENTA <= 80 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 8100;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 70.1 && CUMPLIMIENTO_VENTA <= 80 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 6750;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 70.1 && CUMPLIMIENTO_VENTA <= 80 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 4050;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 70.1 && CUMPLIMIENTO_VENTA <= 80 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 2700;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 70.1 && CUMPLIMIENTO_VENTA <= 80 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 338;
+  
+   }
+  
+  
+  
+  //-----4
+  
+  if(CUMPLIMIENTO_VENTA >= 80.1 && CUMPLIMIENTO_VENTA <= 90 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 9180;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 80.1 && CUMPLIMIENTO_VENTA <= 90 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 7650;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 80.1 && CUMPLIMIENTO_VENTA <= 90 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 4590;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 80.1 && CUMPLIMIENTO_VENTA <= 90 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 3060;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 80.1 && CUMPLIMIENTO_VENTA <= 90 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 383;
+  
+  
+
+    }
+  
+  
+   //-----5
+  
+  if(CUMPLIMIENTO_VENTA >= 90.1 && CUMPLIMIENTO_VENTA <= 100 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 10800;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 90.1 && CUMPLIMIENTO_VENTA <= 100 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 9000;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 90.1 && CUMPLIMIENTO_VENTA <= 100 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 5400;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 90.1 && CUMPLIMIENTO_VENTA <= 100 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 3600;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 90.1 && CUMPLIMIENTO_VENTA <= 100 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 450;
+  
+    }
+  
+   //-----6
+  
+  if(CUMPLIMIENTO_VENTA >= 100.1 && CUMPLIMIENTO_VENTA <= 115 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 12420;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 100.1 && CUMPLIMIENTO_VENTA <= 115 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 10350;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 100.1 && CUMPLIMIENTO_VENTA <= 115 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 6210;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 100.1 && CUMPLIMIENTO_VENTA <= 115 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 4140;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 100.1 && CUMPLIMIENTO_VENTA <= 115 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 518;
+  
+    }
+
+//-----7
+  
+  if(CUMPLIMIENTO_VENTA >= 115.1 && CUMPLIMIENTO_VENTA <= 130 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 12960;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 115.1 && CUMPLIMIENTO_VENTA <= 130 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 10800;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 115.1 && CUMPLIMIENTO_VENTA <= 130 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 6480;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 115.1 && CUMPLIMIENTO_VENTA <= 130 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 4320;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 115.1 && CUMPLIMIENTO_VENTA <= 130 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 540;
+  
+    }  
+
+
+//-----8
+  
+  if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_VENTA <= 150 && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 14040;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_VENTA <= 150 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 11700;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_VENTA <= 150 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 7020;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_VENTA <= 150 && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 4680;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_VENTA <= 150 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 585;
+  
+    }  
+  
+  
+//-----8
+  
+  if(CUMPLIMIENTO_VENTA >= 150.1  && CUMPLIMIENTO_CALIDAD >= 105){
+  
+    return 15120;    
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_CALIDAD <= 104.9 && CUMPLIMIENTO_CALIDAD >= 92){
+  
+    return 12600;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_CALIDAD <= 91.9 && CUMPLIMIENTO_CALIDAD >= 82){
+  
+    return 7560;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1  && CUMPLIMIENTO_CALIDAD <= 81.9 && CUMPLIMIENTO_CALIDAD >= 72){
+  
+    return 5040;
+  
+  }else if(CUMPLIMIENTO_VENTA >= 130.1 && CUMPLIMIENTO_CALIDAD <= 71.9 && CUMPLIMIENTO_CALIDAD >= 0.0001){
+  
+    return 630;
+  
+    }  
+    
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//boton de resultados, activa las funciones del script
+
+function boton() {
+
+
+
+
+
+  cumplimiento_de_venta = cump_venta();
+  
+  cumplimiento_de_calidad = cump_calidad(); 
+  
+
+
+  valor_venta = PAGO_VENTA(cumplimiento_de_venta,cumplimiento_de_calidad);  
+  
+  
+  remuneracion = total_remuneracion(valor_venta);
+  
+  document.getElementById("cumplimiento_venta").innerHTML =   cumplimiento_de_venta;
+  document.getElementById("cumplimiento_calidad").innerHTML =   cumplimiento_de_calidad;
+  document.getElementById("valor_venta").innerHTML =   valor_venta;
+  document.getElementById("remuneracion").innerHTML =   remuneracion;
+}
+
+
+
+
+</script>
+
+</body>
+</html>
